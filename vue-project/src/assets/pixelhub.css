@@ -1,0 +1,471 @@
+/* ==========================================================================
+   PixelHub — Vue integration stylesheet
+   Colors:  blue #0071F9 | coral #EC6180 | grey #EEEEEE | dark text #1E1E1E
+   Imported globally in src/main.js (AFTER the scaffold's main.css so the
+   overrides below win).
+   ========================================================================== */
+
+/* ---------- Overrides for the Vue scaffold's base/main styles ---------- */
+body {
+  font-family: "Poppins", sans-serif;
+  color: var(--dark, #1e1e1e);
+  overflow-x: hidden; /* rounded blocks never cause horizontal scroll */
+  background: #fff;
+  min-height: 0;
+}
+@media (min-width: 1024px) {
+  body {
+    display: block;      /* undo scaffold's flex place-items center */
+    place-items: unset;
+  }
+}
+#app {
+  max-width: none;       /* undo scaffold's max-width / padding / grid */
+  margin: 0;
+  padding: 0;
+  display: block;
+  font-weight: normal;
+}
+a {
+  padding: 0;            /* undo scaffold link padding */
+  transition: opacity 0.2s ease, transform 0.2s ease, color 0.2s ease, background 0.2s ease;
+}
+
+/* ---------- PixelHub variables ---------- */
+:root {
+  --blue:  #0071F9;
+  --coral: #EC6180;
+  --grey:  #EEEEEE;
+  --dark:  #1E1E1E;
+}
+
+/* Vertical rhythm between sections */
+.section { padding-top: 4.5rem; }
+
+/* ---------- Shared bits ---------- */
+
+/* Coral pill button (Sign In, Search Now, View All, Explore) */
+.btn-coral {
+  background-color: var(--coral);
+  color: #fff;
+  border: none;
+  font-size: 0.8rem;
+  letter-spacing: 0.5px;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+.btn-coral:hover,
+.btn-coral:focus {
+  background-color: var(--coral);
+  color: #fff;
+  opacity: 0.9;
+  transform: translateY(-2px);
+}
+
+/* Small red uppercase label above section titles */
+.section-label {
+  color: var(--coral);
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+/* Section titles */
+.section-title { font-size: 1.75rem; }
+
+/* Grey genre text on cards */
+.genre {
+  color: #8a8a8a;
+  font-size: 0.8rem;
+}
+
+/* Game titles on cards */
+.game-title { font-size: 1rem; }
+
+/* --------------------------------------------------------------------------
+   Product cards — real game covers from Steam's CDN
+   -------------------------------------------------------------------------- */
+.game-card {
+  background: var(--grey);
+  border-radius: 1.25rem;
+  padding: 1rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.game-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.08);
+}
+
+/* Catalog cards are white with more padding */
+.game-card--catalog {
+  background: #fff;
+  padding: 0;
+  overflow: hidden;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.07);
+}
+
+/* Cover image containers */
+.game-card__media {
+  position: relative;
+  overflow: hidden;
+  border-radius: 1rem;
+}
+.game-card--catalog .game-card__media { border-radius: 0; }
+.game-card__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.3s ease;
+}
+.game-card:hover .game-card__media img { transform: scale(1.04); }
+
+/* Square cover (trending + most played rows) */
+.game-card__media--square {
+  aspect-ratio: 1 / 1;
+}
+/* Portrait cover (catalog grid) */
+.game-card__media--portrait {
+  aspect-ratio: 3 / 4;
+}
+
+/* Discount badge (top-right of catalog covers) */
+.discount-badge {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  background: var(--coral);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Sample rating badge (catalog cards) */
+.rating-badge {
+  flex-shrink: 0;
+  background: #eef4ff;
+  color: var(--blue);
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+/* Price display — sample RMB prices */
+.price-row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  justify-content: center;
+}
+.price-row--flush { justify-content: space-between; align-items: center; }
+.price-now {
+  color: var(--coral);
+  font-weight: 700;
+  font-size: 1rem;
+}
+.price-old {
+  color: #9aa1ab;
+  font-size: 0.8rem;
+  text-decoration: line-through;
+}
+
+/* Short description on catalog cards (clamped to 3 lines) */
+.game-desc {
+  color: #6c7583;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  margin-bottom: 0.75rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Genre text is clickable and filters the catalogue */
+.genre-link { color: #8a8a8a; text-decoration: none; }
+.genre-link:hover { color: var(--coral); }
+
+/* ==========================================================================
+   SHOP — filter pills for the catalogue
+   ========================================================================== */
+.filter-pill {
+  border: 1px solid #d9dde3;
+  background: #fff;
+  color: #5a6069;
+  font-size: 0.85rem;
+  font-weight: 500;
+  padding: 0.45rem 1.25rem;
+  border-radius: 999px;
+  transition: all 0.2s ease;
+}
+.filter-pill:hover { border-color: var(--blue); color: var(--blue); }
+.filter-pill--active {
+  background: var(--blue);
+  border-color: var(--blue);
+  color: #fff;
+}
+
+/* Small round blue bag button on trending cards */
+.bag-btn {
+  width: 42px;
+  height: 42px;
+  border: none;
+  border-radius: 50%;
+  background: var(--blue);
+  color: #fff;
+  font-size: 1.05rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: opacity 0.2s ease;
+}
+.bag-btn:hover { opacity: 0.85; }
+
+.btn-explore { font-size: 0.75rem; padding-left: 1rem !important; padding-right: 1rem !important; }
+
+/* ==========================================================================
+   HERO — bright blue block with rounded bottom-left / bottom-right corners
+   ========================================================================== */
+.hero {
+  background-color: var(--blue);
+  border-radius: 0 0 80px 80px;
+  margin-bottom: 1rem;
+}
+
+/* Small rounded square behind the logo icon */
+.brand-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.18);
+  color: #fff;
+  font-size: 1.2rem;
+}
+.text-coral { color: var(--coral); }
+
+/* Navbar links */
+.hero .nav-link {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.9rem;
+}
+.hero .nav-link:hover,
+.hero .nav-link.active { color: #fff; }
+
+/* White-ish collapse panel on mobile so links stay readable */
+@media (max-width: 991.98px) {
+  .hero .navbar-collapse {
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 1rem;
+    padding: 1rem;
+    margin-top: 0.75rem;
+  }
+}
+
+/* Hero typography */
+.welcome-line {
+  font-size: 1rem;
+  font-weight: 500;
+  opacity: 0.9;
+}
+.hero-title {
+  font-size: clamp(2rem, 4.5vw, 3.4rem);
+  line-height: 1.15;
+  text-transform: uppercase;
+}
+.hero-text {
+  font-size: 0.95rem;
+  opacity: 0.9;
+  max-width: 33rem;
+}
+
+/* Pill-shaped search bar with the coral button attached inside */
+.search-bar {
+  background: #fff;
+  border-radius: 999px;
+  max-width: 33rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+}
+.search-input {
+  border: none;
+  outline: none;
+  font-size: 0.9rem;
+  background: transparent;
+  min-width: 0;
+  padding-right: 1rem;
+}
+.search-input::placeholder { color: #9aa1ab; }
+
+/* Big rounded hero image */
+.hero-image {
+  border-radius: 2rem;
+  min-height: 300px;
+  overflow: hidden;
+}
+/* Photo inside the hero image box (fills and crops) */
+.hero-image--photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ==========================================================================
+   MOST PLAYED — soft grey panel with very large rounded corners
+   ========================================================================== */
+.grey-panel {
+  background: var(--grey);
+  border-radius: 60px;
+  padding: 4rem 3rem;
+}
+
+/* Cards inside the grey panel — equal height, flex column, button pinned to
+   the bottom so all EXPLORE buttons line up on one horizontal line regardless
+   of how long the game titles are. Works at every breakpoint because the
+   Bootstrap grid (row-cols-*) makes the columns equal height via h-100. */
+.game-card--compact {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding: 1rem 0.5rem;
+  background: transparent;
+}
+.game-card--compact:hover { box-shadow: none; transform: none; }
+.game-card--compact .game-card__media {
+  width: 100%;
+  margin-bottom: 0.75rem;
+  flex-shrink: 0;
+}
+.compact-genre,
+.compact-title,
+.compact-price {
+  width: 100%;
+  flex-shrink: 0;
+}
+.compact-title {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.compact-price {
+  align-items: center;
+  justify-content: center;
+}
+.game-card--compact .compact-btn {
+  margin-top: auto; /* pushes the button to the bottom of the equal-height card */
+  font-size: 0.75rem;
+}
+
+/* ==========================================================================
+   TOP CATEGORIES — cards with a blue header + image below
+   ========================================================================== */
+.category-card {
+  border-radius: 1.25rem;
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease;
+  background: #fff;
+  display: block;
+  text-align: center;
+}
+.category-card--link { cursor: pointer; }
+.category-card:hover { transform: translateY(-4px); }
+
+/* Blue rounded header strip with the category name */
+.category-head {
+  background: var(--blue);
+  color: #fff;
+  font-weight: 600;
+  text-align: center;
+  padding: 0.75rem;
+  font-size: 0.95rem;
+}
+
+/* Representative game cover below the header */
+.category-image-box {
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+}
+.category-image-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ==========================================================================
+   ABOUT US
+   ========================================================================== */
+.about-image-box {
+  border-radius: 2rem;
+  overflow: hidden;
+}
+.about-image-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ==========================================================================
+   FOOTER — dark blue block, matching rounded top corners
+   ========================================================================== */
+.footer {
+  background: #052a5e;
+  color: rgba(255, 255, 255, 0.8);
+  border-radius: 60px 60px 0 0;
+  margin-top: 4.5rem;
+  font-size: 0.9rem;
+}
+.footer-heading { color: #fff; letter-spacing: 1px; }
+.footer-text { color: rgba(255, 255, 255, 0.7); }
+.footer-link {
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+.footer-link:hover { color: #fff; }
+
+/* Round social icon buttons */
+.social-link {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition: background 0.2s ease;
+}
+.social-link:hover { background: var(--coral); color: #fff; }
+
+.footer-bottom {
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  margin-top: 1rem;
+}
+
+/* ==========================================================================
+   RESPONSIVE TWEAKS
+   ========================================================================== */
+@media (max-width: 767.98px) {
+  /* Smaller rounded corners on phones */
+  .hero { border-radius: 0 0 40px 40px; }
+  .grey-panel { border-radius: 32px; padding: 2.5rem 1.25rem; }
+  .footer { border-radius: 32px 32px 0 0; }
+
+  /* Search bar: stack input and button vertically for very narrow screens */
+  .search-bar { flex-direction: column; align-items: stretch; gap: 0.5rem; padding: 1rem; border-radius: 1.5rem; }
+  .search-input { text-align: center; padding: 0.5rem 0; }
+}
