@@ -1,0 +1,16 @@
+# Dependencies
+node_modules/
+
+# Front-end build output
+frontend/dist/
+
+# SQLite database file (created automatically on first start)
+backend/tasks.sqlite
+*.sqlite
+*.sqlite-journal
+*.db
+
+# Local environment and editor files
+.env
+.DS_Store
+.vscode/
